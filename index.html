@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuôi Tôi - Dự án nuôi bản thân</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            /* 1. Theme cũ: Xanh đậm & Xanh nõn chuối */
+            --primary-dark: #0f3d32;
+            --primary-lime: #cce760;
+            --bg-light: #f7f7f5;
+            --text-dark: #1a1a1a;
+            --text-gray: #555;
+            --white: #ffffff;
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+
+        /* --- Reset & Base --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* SVG Utility */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .icon-fill {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .icon-lg {
+            width: 48px;
+            height: 48px;
+        }
+
+        /* --- Layout Utilities --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 60px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 61, 50, 0.2);
+        }
+
+        .btn-dark {
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary-dark);
+            background: transparent;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .btn-lime {
+            background-color: var(--primary-lime);
+            color: var(--primary-dark);
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 15px 0;
+            background: rgba(247, 247, 245, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 40px 0 20px;
+        }
+
+        .hero-title {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-title h1 {
+            font-size: 42px;
+            line-height: 1.15;
+            margin-bottom: 15px;
+        }
+
+        .hero-title p {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        /* Hero Grid - Sắp xếp ảnh random */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: 180px 180px;
+            gap: 15px;
+        }
+
+        .grid-item {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.02);
+        }
+
+        .grid-stats {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .grid-long-img {
+            grid-column: span 1;
+            grid-row: span 2;
+        }
+
+        .grid-img-hand {
+            background-color: var(--primary-lime);
+            color: var(--primary-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-label {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 4px 12px;
+            border-radius: 20px;
+            color: var(--primary-dark);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        /* --- Marquee (Chữ chạy giữa trang) --- */
+        .marquee-container {
+            background-color: var(--primary-lime);
+            /* Nền xanh nõn chuối */
+            overflow: hidden;
+            padding: 15px 0;
+            white-space: nowrap;
+            transform: rotate(-1deg);
+            margin: 40px 0;
+            border-top: 2px solid var(--primary-dark);
+            border-bottom: 2px solid var(--primary-dark);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: slide 30s linear infinite;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @keyframes slide {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* --- Cards --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            height: 200px;
+            position: relative;
+            background: #f4f4f4;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-body h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .price-tag {
+            background: var(--primary-lime);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+
+        /* --- MODAL SYSTEM (3 Checkboxes for 3 separate modals) --- */
+        .modal-toggle {
+            display: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 61, 50, 0.9);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-box {
+            background: white;
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            position: relative;
+            transform: translateY(30px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        /* Logic mở modal tương ứng */
+        #modal-cafe:checked~.overlay-cafe,
+        #modal-lunch:checked~.overlay-lunch,
+        #modal-tea:checked~.overlay-tea {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #modal-cafe:checked~.overlay-cafe .modal-box,
+        #modal-lunch:checked~.overlay-lunch .modal-box,
+        #modal-tea:checked~.overlay-tea .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            cursor: pointer;
+            color: #999;
+            z-index: 1;
+            background: #eee;
+            border-radius: 50%;
+            padding: 5px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-btn:hover {
+            color: var(--primary-dark);
+            background: var(--primary-lime);
+        }
+
+        .qr-wrapper {
+            background: var(--primary-lime);
+            padding: 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin: 15px 0;
+        }
+
+        .qr-code-img {
+            width: 100%;
+            max-width: 200px;
+            border-radius: 8px;
+            display: block;
+            background: #fff;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            .hero-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: 160px 160px 160px;
+            }
+
+            .grid-long-img {
+                grid-column: span 1;
+                grid-row: span 2;
+            }
+
+            .grid-stats {
+                grid-column: span 2;
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                gap: 10px;
+            }
+
+            .grid-long-img,
+            .grid-stats {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <input type="checkbox" id="modal-cafe" class="modal-toggle">
+    <input type="checkbox" id="modal-lunch" class="modal-toggle">
+    <input type="checkbox" id="modal-tea" class="modal-toggle">
+
+    <div class="container">
+        <header>
+            <nav>
+                <div class="logo">
+                    <svg class="icon-fill" viewBox="0 0 24 24"
+                        style="width: 30px; height: 30px; color: var(--primary-lime);">
+                        <path
+                            d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                    </svg>
+                    <span style="margin-left: 8px;">Nuôi Tôi</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#thuc-don">Thực đơn</a></li>
+                    <li><a href="#quy-trinh">Quy trình</a></li>
+                </ul>
+                <label for="modal-cafe" class="btn btn-dark">
+                    Mời tôi ngay
+                </label>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-title">
+                <h1>Dự án nuôi bản thân</h1>
+                <p>Mỗi cốc cafe, mỗi bữa ăn bạn mời là nguồn nhiên liệu tuyệt vời để tôi tiếp tục làm việc và tạo ra giá
+                    trị. Cảm ơn bạn đã "nuôi" tôi!</p>
+            </div>
+
+            <div class="hero-grid">
+                <div class="grid-item grid-stats">
+                    <div>
+                        <h2 style="color: var(--primary-lime); font-size: 42px; margin-bottom: 5px;">100%</h2>
+                        <p style="font-size: 14px; opacity: 0.9; font-weight: 600;">Năng lượng vào công việc.</p>
+                    </div>
+                    <div><span style="font-size: 12px; opacity: 0.8;">Cảm kích vô cùng!</span></div>
+                </div>
+
+                <div class="grid-item">
+                    <img src="https://www.caboocup.com/wp-content/uploads/2025/01/menu-phe-la-2-800x800.webp"
+                        alt="Phê La">
+                </div>
+
+                <div class="grid-item grid-long-img">
+                    <img src="https://haidilaovn.com/wp-content/uploads/2025/03/Menu-Haidilao-Viet-Nam-Trai-nghiem-Lau-Tuoi-Ngon--e1741009787905.webp"
+                        alt="Haidilao">
+                    <div class="grid-label">Ăn ngon</div>
+                </div>
+
+                <div class="grid-item grid-img-hand">
+                    <svg class="icon-lg icon-fill" viewBox="0 0 24 24" style="color: var(--primary-dark);">
+                        <path
+                            d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z" />
+                    </svg>
+                    <h4 style="margin-top: 10px;">Nuôi Tôi</h4>
+                </div>
+
+                <div class="grid-item">
+                    <img src="https://upload.urbox.vn/strapi/Gallery_The_Coffee_House_2_46dac27aac.jpg" alt="TCH">
+                </div>
+
+                <div class="grid-item">
+                    <img src="https://bongbieng.com/wp-content/uploads/2025/09/website_3.png" alt="Bông Biêng">
+                </div>
+            </div>
+        </section>
+
+        <div class="marquee-container">
+            <div class="marquee-content">
+                CAFE SÁNG TỈNH TÁO * BỮA TRƯA NO BỤNG * TRÀ CHIỀU CHILL CHILL * CẢM ƠN BẠN ĐÃ MỜI * NẠP NĂNG LƯỢNG LÀM
+                VIỆC * CAFE SÁNG TỈNH TÁO * BỮA TRƯA NO BỤNG *
+            </div>
+        </div>
+
+        <section class="section-padding" id="thuc-don">
+            <div class="text-center" style="margin-bottom: 40px;">
+                <h2>Thực đơn năng lượng</h2>
+                <p style="color: var(--text-gray);">Chọn món bạn muốn mời tôi nhé!</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://aeonmall-haiphong-lechan.com.vn/wp-content/uploads/2020/12/gourmet-guide-3_resize.jpg"
+                            alt="Highlands Coffee">
+                    </div>
+                    <div class="card-body">
+                        <h3>Cafe Sáng Highlands</h3>
+                        <p style="font-size: 14px; color: #666;">Khởi đầu ngày mới tỉnh táo với hương vị đậm đà.</p>
+                        <div class="card-meta">
+                            <span class="price-tag">Tuỳ tâm</span>
+                            <label for="modal-cafe"
+                                style="font-size: 13px; color: var(--primary-dark); font-weight: 700; cursor: pointer; display: flex; align-items: center;">
+                                Mời ngay <svg class="icon" viewBox="0 0 24 24" style="width: 16px; margin-left: 5px;">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img">
+                        <img src="https://dashboard.inspace-creative.co/uploads/images/a0r4f03y.zqj_2.jpg"
+                            alt="Bữa trưa UTop">
+                    </div>
+                    <div class="card-body">
+                        <h3>Bữa Trưa Tuyệt Vời</h3>
+                        <p style="font-size: 14px; color: #666;">Suất ăn dinh dưỡng 40k từ UTop nạp sức mạnh.</p>
+                        <div class="card-meta">
+                            <span class="price-tag">40.000đ</span>
+                            <label for="modal-lunch"
+                                style="font-size: 13px; color: var(--primary-dark); font-weight: 700; cursor: pointer; display: flex; align-items: center;">
+                                Mời ngay <svg class="icon" viewBox="0 0 24 24" style="width: 16px; margin-left: 5px;">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background: #f9f9f9; padding: 20px;">
+                        <img src="https://bongbieng.com/wp-content/uploads/2025/04/Thanh-Tra.png"
+                            alt="Trà sữa Bông Biêng" style="object-fit: contain;">
+                    </div>
+                    <div class="card-body">
+                        <h3>Trà Chiều Bông Biêng</h3>
+                        <p style="font-size: 14px; color: #666;">Một chút ngọt ngào, thanh mát buổi chiều.</p>
+                        <div class="card-meta">
+                            <span class="price-tag">Tuỳ tâm</span>
+                            <label for="modal-tea"
+                                style="font-size: 13px; color: var(--primary-dark); font-weight: 700; cursor: pointer; display: flex; align-items: center;">
+                                Mời ngay <svg class="icon" viewBox="0 0 24 24" style="width: 16px; margin-left: 5px;">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; text-align: center;">
+                    <div style="flex: 1; text-align: left;">
+                        <span
+                            style="font-family: 'Playfair Display'; font-size: 24px; font-weight: 800; color: var(--primary-lime);">
+                            <svg class="icon-fill" viewBox="0 0 24 24"
+                                style="width: 30px; height: 30px; color: var(--primary-lime);">
+                                <path
+                                    d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                            </svg>
+                            <span style="margin-left: 8px;">Nuôi Tôi</span>
+                        </span>
+                        <p style="font-size: 13px; opacity: 0.7; margin-top: 10px; max-width: 300px;">Cảm ơn bạn đã ghé
+                            thăm và tiếp thêm năng lượng cho tôi.</p>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <a href="https://www.facebook.com/tunnienguci">Facebook</a>
+                        <a href="https://www.instagram.com/tunnienguci/">Instagram</a>
+                    </div>
+                </div>
+                <div
+                    style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; font-size: 12px; opacity: 0.5; text-align: center;">
+                    © 2024 Nuôi Tôi - TuanQC2.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay overlay-cafe">
+        <label for="modal-cafe" style="position: absolute; width: 100%; height: 100%; cursor: pointer;"></label>
+        <div class="modal-box">
+            <label for="modal-cafe" class="modal-close-btn">✕</label>
+
+            <img src="https://aeonmall-haiphong-lechan.com.vn/wp-content/uploads/2020/12/gourmet-guide-3_resize.jpg"
+                style="height: 150px; border-radius: 8px; margin-bottom: 15px;">
+            <h3>Cafe Sáng Highlands</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Mời TuanQC2 một ly cafe để tỉnh táo cả ngày
+                nhé!</p>
+
+            <div class="qr-wrapper">
+                <img src="https://qr.sepay.vn/img?bank=Techcombank&acc=89988669999&template=&amount=&des=CafeHighland"
+                    alt="QR Cafe" class="qr-code-img">
+            </div>
+            <p style="font-size: 12px; color: #999; font-weight: 600;">Số tiền tuỳ tâm</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay overlay-lunch">
+        <label for="modal-lunch" style="position: absolute; width: 100%; height: 100%; cursor: pointer;"></label>
+        <div class="modal-box">
+            <label for="modal-lunch" class="modal-close-btn">✕</label>
+
+            <img src="https://dashboard.inspace-creative.co/uploads/images/a0r4f03y.zqj_2.jpg"
+                style="height: 150px; border-radius: 8px; margin-bottom: 15px;">
+            <h3>Bữa Trưa Tuyệt Vời</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Suất ăn trưa đầy đủ dinh dưỡng từ UTop.</p>
+
+            <div class="qr-wrapper">
+                <img src="https://qr.sepay.vn/img?bank=Techcombank&acc=89988669999&template=&amount=40000&des=BuaTruaUTop"
+                    alt="QR Lunch" class="qr-code-img">
+            </div>
+            <p style="font-size: 14px; color: var(--primary-dark); font-weight: 700;">40.000đ</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay overlay-tea">
+        <label for="modal-tea" style="position: absolute; width: 100%; height: 100%; cursor: pointer;"></label>
+        <div class="modal-box">
+            <label for="modal-tea" class="modal-close-btn">✕</label>
+
+            <img src="https://bongbieng.com/wp-content/uploads/2025/04/Thanh-Tra.png"
+                style="height: 150px; object-fit: contain; background: #f9f9f9; border-radius: 8px; margin-bottom: 15px;">
+            <h3>Trà Chiều Bông Biêng</h3>
+            <p style="font-size: 14px; color: #666; margin-bottom: 15px;">Ngọt ngào và thanh mát cho buổi chiều năng
+                suất.</p>
+
+            <div class="qr-wrapper">
+                <img src="https://qr.sepay.vn/img?bank=Techcombank&acc=89988669999&template=&amount=&des=TraSuaChieu"
+                    alt="QR Tea" class="qr-code-img">
+            </div>
+            <p style="font-size: 12px; color: #999; font-weight: 600;">Số tiền tuỳ tâm</p>
+        </div>
+    </div>
+
+</body>
+
+</html>
